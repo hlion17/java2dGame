@@ -27,15 +27,17 @@ public class Player extends Entity {
         screenX = gp.SCREEN_WIDTH / 2 - (gp.TILE_SIZE / 2);
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
+        solidArea = new Rectangle(8, 16, 32, 32);
+
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
         worldX = gp.TILE_SIZE * 23;
-        worldY = gp.TILE_SIZE * 21;
+        worldY = gp.TILE_SIZE * 20;
         speed = 4;
-        direction = Direction.DOWN;
+        direction = Direction.UP;
     }
 
     public void getPlayerImage() {
@@ -54,22 +56,26 @@ public class Player extends Entity {
     }
 
     public void update() {
-        if (keyHandler.upPressed) {
-            direction = Direction.UP;
-            worldY -= speed;
-            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
-        } else if (keyHandler.downPressed) {
-            direction = Direction.DOWN;
-            worldY += speed;
-            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
-        } else if (keyHandler.leftPressed) {
-            direction = Direction.LEFT;
-            worldX -= speed;
-            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
-        } else if (keyHandler.rightPressed) {
-            direction = Direction.RIGHT;
-            worldX += speed;
-            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
+        if (keyHandler.upPressed) direction = Direction.UP;
+        else if (keyHandler.downPressed) direction = Direction.DOWN;
+        else if (keyHandler.leftPressed) direction = Direction.LEFT;
+        else if (keyHandler.rightPressed) direction = Direction.RIGHT;
+
+        // CHECK TILE COLLISION
+        collisionOn = false;
+        gp.collisionChecker.checkTile(this);
+
+        // IF COLLISION IS FALSE, PLAYER CAN MOVE
+        if (!collisionOn) {
+            if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed) {
+                switch (direction) {
+                    case UP: worldY -= speed; break;
+                    case DOWN: worldY += speed; break;
+                    case LEFT: worldX -= speed; break;
+                    case RIGHT: worldX += speed; break;
+                }
+                System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
+            }
         }
 
         spriteCounter++;
