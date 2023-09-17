@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.entity.Player;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,7 +10,7 @@ public class GamePanel extends JPanel implements Runnable {
     // SCREEN SETTINGS
     final int ORIGINAL_TITLE_SIZE = 16;  // 16x16 tile
     final int SCALE = 3;
-    final int TILE_SIZE = ORIGINAL_TITLE_SIZE * SCALE;  // 48x48 tile
+    public final int TILE_SIZE = ORIGINAL_TITLE_SIZE * SCALE;  // 48x48 tile
     final int MAX_SCREEN_COL = 16;
     final int MAX_SCREEN_ROW = 12;
     final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;  // 768 pixels
@@ -23,6 +25,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
     KeyHandler keyHandler = new KeyHandler();
+    Player player = new Player(this, keyHandler);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -58,27 +61,17 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.white);
-
-        g2.fillRect(playerX, playerY, TILE_SIZE, TILE_SIZE);
+        player.draw(g2);
 
         g2.dispose();
     }
 
     public void update() {
-        if (keyHandler.upPressed) {
-            playerY -= playerSpeed;
-        } else if (keyHandler.downPressed) {
-            playerY += playerSpeed;
-        } else if (keyHandler.leftPressed) {
-            playerX -= playerSpeed;
-        } else if (keyHandler.rightPressed) {
-            playerX += playerSpeed;
-        }
+        player.update();
     }
 }
