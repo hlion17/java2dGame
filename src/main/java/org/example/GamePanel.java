@@ -14,6 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int SCREEN_WIDTH = TILE_SIZE * MAX_SCREEN_COL;  // 768 pixels
     final int SCREEN_HEIGHT = TILE_SIZE * MAX_SCREEN_ROW;  // 576 pixels
 
+    final int FPS = 60;
+
     // set player's default position
     int playerX = 100;
     int playerY = 100;
@@ -37,12 +39,32 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        double drawInterval = (double) 1000000000 / FPS;
+        double nextDrawTime = System.nanoTime() + drawInterval;
+
         while (gameThread != null) {
             // 1. UPDATE: update information such as character position
             update();
             // 2. DRAW: draw the screen with updated information
             repaint();
+
+            try {
+                double remainingTime = nextDrawTime - System.nanoTime();
+                remainingTime = remainingTime / 1000000;
+
+                if (remainingTime < 0) {
+                    remainingTime = 0;
+                }
+
+                Thread.sleep((long) remainingTime);
+
+                nextDrawTime += drawInterval;
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
+
     }
 
     @Override
