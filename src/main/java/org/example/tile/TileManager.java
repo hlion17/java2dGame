@@ -79,15 +79,20 @@ public class TileManager {
         while (worldCol < gp.MAX_WORLD_COL && worldRow < gp.MAX_WORLD_ROW) {
             int tileNum = mapTileNum[worldCol][worldRow];
 
+            int playerScreenXOffsetStart = (gp.player.worldX - gp.player.screenX);
+            int playerScreenXOffsetEnd = (gp.player.worldX + gp.player.screenX);
+            int playerScreenYOffsetStart = (gp.player.worldY - gp.player.screenY);
+            int playerScreenYOffsetEnd = (gp.player.worldY + gp.player.screenY);
+
             int worldX = worldCol * gp.TILE_SIZE;
             int worldY = worldRow * gp.TILE_SIZE;
-            int screenX = worldX - gp.player.worldX + gp.player.screenX;
-            int screenY = worldY - gp.player.worldY + gp.player.screenY;
+            int screenX = worldX - playerScreenXOffsetStart;
+            int screenY = worldY - playerScreenYOffsetStart;
 
-            if (worldX + gp.TILE_SIZE > gp.player.worldX - gp.player.screenX
-                    && worldX - gp.TILE_SIZE < gp.player.worldX + gp.player.screenX
-                    && worldY + gp.TILE_SIZE > gp.player.worldY - gp.player.screenY
-                    && worldY - gp.TILE_SIZE < gp.player.worldY + gp.player.screenY) {
+            if (worldX + gp.TILE_SIZE > playerScreenXOffsetStart
+                    && worldX - gp.TILE_SIZE < playerScreenXOffsetEnd
+                    && worldY + gp.TILE_SIZE > playerScreenYOffsetStart
+                    && worldY - gp.TILE_SIZE < playerScreenYOffsetEnd) {
                 g2.drawImage(tiles[tileNum].image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
             }
 

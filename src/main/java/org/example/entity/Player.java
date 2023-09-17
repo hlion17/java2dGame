@@ -57,15 +57,19 @@ public class Player extends Entity {
         if (keyHandler.upPressed) {
             direction = Direction.UP;
             worldY -= speed;
+            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
         } else if (keyHandler.downPressed) {
             direction = Direction.DOWN;
             worldY += speed;
+            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
         } else if (keyHandler.leftPressed) {
             direction = Direction.LEFT;
             worldX -= speed;
+            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
         } else if (keyHandler.rightPressed) {
             direction = Direction.RIGHT;
             worldX += speed;
+            System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
         }
 
         spriteCounter++;
