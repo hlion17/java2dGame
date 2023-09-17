@@ -19,7 +19,7 @@ public class TileManager {
         this.tiles = new Tile[10];
         this.mapTileNum = new int[gp.MAX_SCREEN_COL][gp.MAX_SCREEN_ROW];
         getTileImage();
-        loadMap();
+        loadMap("/assets/maps/map01.txt");
     }
 
     public void getTileImage() {
@@ -28,18 +28,18 @@ public class TileManager {
             tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/rock-1.png")));
 
             tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/grass-1.png")));
+            tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/grass-2.png")));
 
             tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/sky-1.png")));
+            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/rock-2.png")));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void loadMap() {
+    public void loadMap(String filePath) {
         try {
-            InputStream map01 = getClass().getResourceAsStream("/assets/maps/map01.txt");
+            InputStream map01 = getClass().getResourceAsStream(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(map01)));
 
             int col = 0;
@@ -48,10 +48,12 @@ public class TileManager {
             while (col < gp.MAX_SCREEN_COL && row < gp.MAX_SCREEN_ROW) {
                 String line = br.readLine();
                 String[] split = line.split(" ");
+
                 while (col < gp.MAX_SCREEN_COL) {
                     mapTileNum[col][row] = Integer.parseInt(split[col]);
                     col++;
                 }
+
                 if (col == gp.MAX_SCREEN_COL) {
                     col = 0;
                     row++;
@@ -72,11 +74,8 @@ public class TileManager {
         int y = 0;
 
         while (col < gp.MAX_SCREEN_COL && row < gp.MAX_SCREEN_ROW) {
-
             int tileNum = mapTileNum[col][row];
-
             g2.drawImage(tiles[tileNum].image, x, y, gp.TILE_SIZE, gp.TILE_SIZE, null);
-//            g2.drawImage(tiles[0].image, x, y, gp.TILE_SIZE, gp.TILE_SIZE, null);
             x += gp.TILE_SIZE;
             col++;
 
@@ -87,6 +86,5 @@ public class TileManager {
                 y += gp.TILE_SIZE;
             }
         }
-
     }
 }
