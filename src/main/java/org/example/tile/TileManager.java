@@ -4,16 +4,22 @@ import org.example.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Objects;
 
 public class TileManager {
     GamePanel gp;
     Tile[] tiles;
+    int[][] mapTileNum;
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
         this.tiles = new Tile[10];
+        this.mapTileNum = new int[gp.MAX_SCREEN_COL][gp.MAX_SCREEN_ROW];
         getTileImage();
+        loadMap();
     }
 
     public void getTileImage() {
@@ -31,9 +37,56 @@ public class TileManager {
         }
     }
 
+    public void loadMap() {
+        try {
+            InputStream map01 = getClass().getResourceAsStream("/assets/maps/map01.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(Objects.requireNonNull(map01)));
+
+            int col = 0;
+            int row = 0;
+
+            while (col < gp.MAX_SCREEN_COL && row < gp.MAX_SCREEN_ROW) {
+                String line = br.readLine();
+                String[] split = line.split(" ");
+                while (col < gp.MAX_SCREEN_COL) {
+                    mapTileNum[col][row] = Integer.parseInt(split[col]);
+                    col++;
+                }
+                if (col == gp.MAX_SCREEN_COL) {
+                    col = 0;
+                    row++;
+                }
+            }
+
+            br.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void draw(Graphics2D g2) {
-        g2.drawImage(tiles[0].image, 0, 0, gp.TILE_SIZE, gp.TILE_SIZE, null);
-        g2.drawImage(tiles[1].image, 48, 0, gp.TILE_SIZE, gp.TILE_SIZE, null);
-        g2.drawImage(tiles[2].image, 96, 0, gp.TILE_SIZE, gp.TILE_SIZE, null);
+        int col = 0;
+        int row = 0;
+        int x = 0;
+        int y = 0;
+
+        while (col < gp.MAX_SCREEN_COL && row < gp.MAX_SCREEN_ROW) {
+
+            int tileNum = mapTileNum[col][row];
+
+            g2.drawImage(tiles[tileNum].image, x, y, gp.TILE_SIZE, gp.TILE_SIZE, null);
+//            g2.drawImage(tiles[0].image, x, y, gp.TILE_SIZE, gp.TILE_SIZE, null);
+            x += gp.TILE_SIZE;
+            col++;
+
+            if (col == gp.MAX_SCREEN_COL) {
+                col = 0;
+                x = 0;
+                row++;
+                y += gp.TILE_SIZE;
+            }
+        }
+
     }
 }
