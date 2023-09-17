@@ -25,13 +25,19 @@ public class TileManager {
     public void getTileImage() {
         try {
             tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/rock-1.png")));
+            tiles[0].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/ground-1.png")));
 
             tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/grass-2.png")));
+            tiles[1].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/tumble-1.png")));
 
             tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/rock-2.png")));
+            tiles[2].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/water-1.png")));
+
+            tiles[3] = new Tile();
+            tiles[3].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/grass-1.png")));
+
+            tiles[4] = new Tile();
+            tiles[4].image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/tiles/ground-2.png")));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
