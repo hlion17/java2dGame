@@ -102,18 +102,21 @@ public class Player extends Entity {
         String objectName = gp.obj[objectIndex].name;
         switch (objectName) {
             case "key":
+                gp.playSE(1);  // coin sound
                 gp.obj[objectIndex] = null;
                 hasKey++;
                 System.out.println("Key: " + hasKey);
                 break;
             case "chest":
                 if (hasKey > 0) {
+                    gp.playSE(3);  // unlock sound
                     gp.obj[objectIndex] = null;
                     hasKey--;
                     System.out.println("Key: " + hasKey);
                 }
                 break;
             case "boosts":
+                gp.playSE(2);  // powerUp sound
                 gp.obj[objectIndex] = null;
                 speed+=5;
                 break;
