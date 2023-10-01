@@ -1,6 +1,9 @@
 package org.example;
 
 import org.example.entity.Entity;
+import org.example.object.SuperObject;
+
+import java.util.Objects;
 
 public class CollisionChecker {
 
@@ -56,6 +59,59 @@ public class CollisionChecker {
                 entity.collisionOn = true;
             }
         }
+    }
 
+    public int checkObject(Entity entity, boolean isPlayer) {
+        int index = 999;
+
+        for (int i = 0; i < gp.obj.length; i++) {
+            SuperObject o = gp.obj[i];
+            if (o != null) {
+                // Get entity's solid area position
+                entity.solidArea.x = entity.worldX + entity.solidArea.x;
+                entity.solidArea.y = entity.worldY + entity.solidArea.y;
+                // Get the object's solid area position
+                o.solidArea.x = o.worldX + o.solidArea.x;
+                o.solidArea.y = o.worldY + o.solidArea.y;
+
+                switch (entity.direction) {
+                    case UP:
+                        entity.solidArea.y -= entity.speed;
+                        if (entity.solidArea.intersects(o.solidArea)) {
+                            if (o.collision) entity.collisionOn = true;
+                            if (isPlayer) index = i;
+                        }
+                        break;
+                    case DOWN:
+                        entity.solidArea.y += entity.speed;
+                        if (entity.solidArea.intersects(o.solidArea)) {
+                            if (o.collision) entity.collisionOn = true;
+                            if (isPlayer) index = i;
+                        }
+                        break;
+                    case LEFT:
+                        entity.solidArea.x -= entity.speed;
+                        if (entity.solidArea.intersects(o.solidArea)) {
+                            if (o.collision) entity.collisionOn = true;
+                            if (isPlayer) index = i;
+                        }
+                        break;
+                    case RIGHT:
+                        entity.solidArea.x += entity.speed;
+                        if (entity.solidArea.intersects(o.solidArea)) {
+                            if (o.collision) entity.collisionOn = true;
+                            if (isPlayer) index = i;
+                        }
+                        break;
+                }
+
+                entity.solidArea.x = entity.solidAreaDefaultX;
+                entity.solidArea.y = entity.solidAreaDefaultY;
+                o.solidArea.x = o.solidAreaDefaultX;
+                o.solidArea.y = o.solidAreaDefaultY;
+            }
+        }
+
+        return index;
     }
 }

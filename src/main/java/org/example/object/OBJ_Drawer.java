@@ -12,5 +12,6 @@ public class OBJ_Drawer extends SuperObject {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        collision = true;
     }
 }

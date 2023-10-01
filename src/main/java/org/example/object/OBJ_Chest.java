@@ -6,11 +6,12 @@ import java.util.Objects;
 
 public class OBJ_Chest extends SuperObject {
     public OBJ_Chest() {
-        name = "chect";
+        name = "chest";
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/objects/Chest.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        collision = true;
     }
 }

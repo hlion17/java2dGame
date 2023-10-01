@@ -20,6 +20,8 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
+    int hasKey = 0;
+
     public Player(GamePanel gp, KeyHandler keyHandler) {
         this.gp = gp;
         this.keyHandler = keyHandler;
@@ -28,6 +30,8 @@ public class Player extends Entity {
         screenY = gp.SCREEN_HEIGHT / 2 - (gp.TILE_SIZE / 2);
 
         solidArea = new Rectangle(8, 16, 32, 32);
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -65,6 +69,10 @@ public class Player extends Entity {
         collisionOn = false;
         gp.collisionChecker.checkTile(this);
 
+        // CHECK OBJECT COLLISION
+        int objectIndex = gp.collisionChecker.checkObject(this, true);
+        pickUpObject(objectIndex);
+
         // IF COLLISION IS FALSE, PLAYER CAN MOVE
         if (!collisionOn) {
             if (keyHandler.upPressed || keyHandler.downPressed || keyHandler.rightPressed || keyHandler.leftPressed) {
@@ -74,7 +82,7 @@ public class Player extends Entity {
                     case LEFT: worldX -= speed; break;
                     case RIGHT: worldX += speed; break;
                 }
-                System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
+//                System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
             }
         }
 
@@ -86,6 +94,25 @@ public class Player extends Entity {
                 spriteNum = 1;
             }
             spriteCounter = 0;
+        }
+    }
+
+    public void pickUpObject(int objectIndex) {
+        if (objectIndex == 999) return;
+        String objectName = gp.obj[objectIndex].name;
+        switch (objectName) {
+            case "key":
+                gp.obj[objectIndex] = null;
+                hasKey++;
+                System.out.println("Key: " + hasKey);
+                break;
+            case "chest":
+                if (hasKey > 0) {
+                    gp.obj[objectIndex] = null;
+                    hasKey--;
+                    System.out.println("Key: " + hasKey);
+                }
+                break;
         }
     }
 
