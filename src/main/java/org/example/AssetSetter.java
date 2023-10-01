@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.object.OBJ_Chest;
 import org.example.object.OBJ_Drawer;
+import org.example.object.OBJ_boots;
 import org.example.object.OBJ_key;
 
 public class AssetSetter {
@@ -35,5 +36,9 @@ public class AssetSetter {
         gp.obj[5] = new OBJ_Chest();
         gp.obj[5].worldX = 612;
         gp.obj[5].worldY = 160;
+
+        gp.obj[6] = new OBJ_boots();
+        gp.obj[6].worldX = 712;
+        gp.obj[6].worldY = 160;
     }
 }
