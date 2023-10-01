@@ -1,0 +1,27 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "Basic Furniture.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "C:/JYG/download/2DGameAssets/Sprout Lands - Sprites - Basic pack/Sprout Lands - Sprites - Basic pack/Objects",
+    "openFiles": [
+    ],
+    "project": "javagamedemo.tiled-project",
+    "recentFiles": [
+        "Basic Furniture.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}

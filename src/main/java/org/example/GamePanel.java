@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.entity.Player;
+import org.example.object.SuperObject;
 import org.example.tile.TileManager;
 
 import javax.swing.*;
@@ -31,6 +32,12 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this, keyHandler);
     TileManager tileManager = new TileManager(this);
     public CollisionChecker collisionChecker = new CollisionChecker(this);
+    public AssetSetter assetSetter = new AssetSetter(this);
+    public SuperObject[] obj = new SuperObject[10];
+
+    public void setupGame() {
+        assetSetter.setObject();
+    }
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -44,7 +51,6 @@ public class GamePanel extends JPanel implements Runnable {
         gameThread = new Thread(this);
         gameThread.start();
     }
-
     @Override
     public void run() {
         double drawInterval = (double) 1000000000 / FPS;
@@ -71,7 +77,15 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
+        // TILE
         tileManager.draw(g2);
+
+        // OBJECT
+        for (SuperObject o : obj) {
+            if (o != null) o.draw(g2, this);
+        }
+
+        // PLAYER
         player.draw(g2);
 
         g2.dispose();
@@ -80,4 +94,5 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
         player.update();
     }
+
 }

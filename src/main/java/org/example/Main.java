@@ -15,6 +15,7 @@ public class Main {
         window.setTitle("2D Adventure");
 
         GamePanel gamePanel = new GamePanel();
+        gamePanel.setupGame();
         gamePanel.startGameThread();
 
         window.add(gamePanel);
