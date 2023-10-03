@@ -20,7 +20,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
 
-    int hasKey = 0;
+    public int hasKey = 0;
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
         this.gp = gp;
@@ -82,7 +82,7 @@ public class Player extends Entity {
                     case LEFT: worldX -= speed; break;
                     case RIGHT: worldX += speed; break;
                 }
-//                System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
+                System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
             }
         }
 
@@ -105,20 +105,26 @@ public class Player extends Entity {
                 gp.playSE(1);  // coin sound
                 gp.obj[objectIndex] = null;
                 hasKey++;
-                System.out.println("Key: " + hasKey);
+                gp.ui.showMessage("You get key!!");
                 break;
             case "chest":
                 if (hasKey > 0) {
                     gp.playSE(3);  // unlock sound
                     gp.obj[objectIndex] = null;
                     hasKey--;
-                    System.out.println("Key: " + hasKey);
+                    gp.ui.showMessage("You Open Chest");
+                } else {
+                    gp.ui.showMessage("You need key..");
                 }
                 break;
             case "boosts":
                 gp.playSE(2);  // powerUp sound
                 gp.obj[objectIndex] = null;
                 speed+=5;
+                gp.ui.showMessage("Speed up!!");
+                break;
+            case "drawer":
+                gp.ui.GAME_FINISHED = true;
                 break;
         }
     }
