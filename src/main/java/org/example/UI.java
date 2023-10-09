@@ -21,7 +21,7 @@ public class UI {
         this.gp = gp;
         FONT_ARIAL_40_PLAIN = new Font("Arial", Font.PLAIN, 40);
         FONT_ARIAL_80_BOLD = new Font("Arial", Font.BOLD, 80);
-        keyImage = new OBJ_key().image;
+        keyImage = new OBJ_key(gp).image;
     }
 
     public void showMessage(String text) {

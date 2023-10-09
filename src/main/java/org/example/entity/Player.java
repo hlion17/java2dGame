@@ -2,6 +2,7 @@ package org.example.entity;
 
 import org.example.GamePanel;
 import org.example.KeyHandler;
+import org.example.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -45,15 +46,22 @@ public class Player extends Entity {
     }
 
     public void getPlayerImage() {
+        up1 = setUp("up1");
+        up2 = setUp("up2");
+        down1 = setUp("down1");
+        down2 = setUp("down2");
+        left1 = setUp("left1");
+        left2 = setUp("left2");
+        right1 = setUp("right1");
+        right2 = setUp("right2");
+    }
+
+    public BufferedImage setUp(String imageName) {
+        UtilityTool utilityTool = new UtilityTool();
+        BufferedImage image;
         try {
-            up1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/up.png")));
-            up2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/up2.png")));
-            down1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/down.png")));
-            down2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/down2.png")));
-            left1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/left.png")));
-            left2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/left2.png")));
-            right1 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/right.png")));
-            right2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/right2.png")));
+            image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/assets/player/" + imageName + ".png")));
+            return utilityTool.scaleImage(image, gp.TILE_SIZE, gp.TILE_SIZE);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -142,7 +150,7 @@ public class Player extends Entity {
             image = getImageBySpriteNum(left1, left2);
         }
 
-        g2.drawImage(image, screenX, screenY, gp.TILE_SIZE, gp.TILE_SIZE, null);
+        g2.drawImage(image, screenX, screenY,null);
     }
 
     private BufferedImage getImageBySpriteNum(BufferedImage image1, BufferedImage image2) {
