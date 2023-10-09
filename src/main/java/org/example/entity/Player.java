@@ -90,7 +90,7 @@ public class Player extends Entity {
                     case LEFT: worldX -= speed; break;
                     case RIGHT: worldX += speed; break;
                 }
-//                System.out.printf("Screen(%d, %d), World(%d, %d) %n", screenX, screenY, worldX, worldY);
+                System.out.printf("Screen(%d, %d), World(%d, %d), WorldCol(%d, %d) %n", screenX, screenY, worldX, worldY, worldX / gp.TILE_SIZE, worldY / gp.TILE_SIZE);
             }
         }
 
