@@ -35,7 +35,7 @@ public class CollisionChecker {
                 entity.collisionOn = true;
             }
         } else if (entity.direction == Entity.Direction.DOWN) {
-            entityBottomRow = (entityTopWorldY + entity.speed) / gp.TILE_SIZE;
+            entityBottomRow = (entityBottomWorldY + entity.speed) / gp.TILE_SIZE;
             tileNum1 = gp.tileManager.mapTileNum[entityLeftCol][entityBottomRow];
             tileNum2 = gp.tileManager.mapTileNum[entityRightCol][entityBottomRow];
             if (gp.tileManager.tiles[tileNum1].collision
